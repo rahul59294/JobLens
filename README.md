@@ -121,4 +121,4 @@ uv run pytest
 
 ## Built with OmniRush
 
-Sessions: _placeholder_
+Built solo in N OmniRush sessions: (1) scaffold, ingest and skill extraction, (2) Wilson intervals and group comparisons, (3) CV and skill-list matching, (4) Markdown report and chart, (5) Docker, CI, README and license.
