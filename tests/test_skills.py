@@ -30,3 +30,17 @@ def test_word_boundaries_do_not_match_inside_larger_words() -> None:
 
     text = "Research SQLAlchemy C++17 and Power BI2 are not exact skill mentions."
     assert extract_skills(text, catalog) == []
+
+
+def test_single_letter_r_does_not_match_ampersand_names() -> None:
+    catalog = pd.DataFrame([{"skill": "R", "category": "languages", "aliases": ""}])
+
+    for text in ("R&D", "Q&A", "R&R"):
+        assert extract_skills(text, catalog) == []
+
+
+def test_single_letter_r_matches_common_separators() -> None:
+    catalog = pd.DataFrame([{"skill": "R", "category": "languages", "aliases": ""}])
+
+    for text in ("R", "R/Python", "R, SQL", "(R)"):
+        assert extract_skills(text, catalog) == ["R"]

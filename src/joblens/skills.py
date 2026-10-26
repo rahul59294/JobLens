@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from .stats import wilson_interval
+
 TOKEN_CHARS = r"A-Za-z0-9_+#"
 
 
@@ -25,7 +27,11 @@ def _skill_pattern(term: str) -> re.Pattern[str]:
     """Build a boundary pattern that also handles punctuation-heavy names."""
 
     escaped = re.escape(term.strip())
-    return re.compile(rf"(?<![{TOKEN_CHARS}]){escaped}(?![{TOKEN_CHARS}])", re.IGNORECASE)
+    boundary_chars = TOKEN_CHARS
+    if len(term.strip()) == 1 and term.strip().isalpha():
+        # Ampersands in names such as R&D must not turn the R into a match.
+        boundary_chars += "&"
+    return re.compile(rf"(?<![{boundary_chars}]){escaped}(?![{boundary_chars}])", re.IGNORECASE)
 
 
 def extract_skills(text: str, catalog: pd.DataFrame) -> list[str]:
@@ -56,10 +62,18 @@ def skill_counts(postings: pd.DataFrame, catalog: pd.DataFrame) -> pd.DataFrame:
 
     total = len(postings)
     rows = [
-        {"skill": skill, "count": count, "share": count / total if total else 0.0}
+        {
+            "skill": skill,
+            "count": count,
+            "share": count / total if total else 0.0,
+            "ci_low": wilson_interval(count, total)[0] if total else 0.0,
+            "ci_high": wilson_interval(count, total)[1] if total else 0.0,
+        }
         for skill, count in counts.items()
         if count
     ]
-    return pd.DataFrame(rows, columns=pd.Index(["skill", "count", "share"])).sort_values(
+    return pd.DataFrame(
+        rows, columns=pd.Index(["skill", "count", "share", "ci_low", "ci_high"])
+    ).sort_values(
         ["count", "skill"], ascending=[False, True], ignore_index=True
     )
