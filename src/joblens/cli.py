@@ -2,11 +2,13 @@
 
 from pathlib import Path
 
+import pandas as pd
 import typer
 from rich.console import Console
 from rich.table import Table
 
 from .ingest import ingest, load_postings
+from .match import load_my_skills, match_postings
 from .skills import load_catalog, skill_counts
 from .stats import compare
 
@@ -72,6 +74,51 @@ def compare_command(
             f"{row['p_value']:.4f}",
             f"{row['p_adjusted']:.4f}",
             str(row["method"]),
+        )
+    console.print(table)
+
+
+@app.command("match")
+def match_command(
+    folder: Path = typer.Argument(..., exists=True, file_okay=False, readable=True),
+    skills: Path | None = typer.Option(None, "--skills", help="Text file with one skill per line"),
+    cv: Path | None = typer.Option(None, "--cv", help="Free-text CV file"),
+    catalog: Path = typer.Option(Path("data/skills.csv"), "--catalog"),
+) -> None:
+    """Match a skill list or CV against job postings."""
+
+    if (skills is None) == (cv is None):
+        raise typer.BadParameter("provide exactly one of --skills or --cv")
+    skill_catalog = load_catalog(catalog)
+    my_skills = load_my_skills(skills or cv, skill_catalog, cv=cv is not None)
+    result = match_postings(load_postings(folder), my_skills, skill_catalog)
+
+    console.print(f"Mean coverage: [bold]{result.mean_coverage:.1%}[/bold]")
+    _print_match_table("Top 10 gaps", result.gaps.head(10), include_count=True)
+    _print_match_table("Top 10 strengths", result.strengths.head(10), include_count=False)
+
+    console.print("Per-posting coverage")
+    table = Table("title", "company", "country", "coverage")
+    for _, row in result.coverage.iterrows():
+        table.add_row(
+            str(row["title"] or ""),
+            str(row["company"] or ""),
+            str(row["country"] or ""),
+            f"{row['coverage']:.1%}",
+        )
+    console.print(table)
+
+
+def _print_match_table(title: str, rows: pd.DataFrame, *, include_count: bool) -> None:
+    console.print(title)
+    table = Table("skill", "count", "prevalence", "95% low", "95% high")
+    for _, row in rows.iterrows():
+        table.add_row(
+            str(row["skill"]),
+            str(int(row["count"])) if include_count else "",
+            f"{row['prevalence']:.1%}",
+            f"{row['ci_low']:.1%}",
+            f"{row['ci_high']:.1%}",
         )
     console.print(table)
 

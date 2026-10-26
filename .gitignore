@@ -7,3 +7,6 @@ data/private/
 data/jobs.csv
 dist/
 *.egg-info/
+my_skills.txt
+cv.txt
+*.cv.txt

@@ -1,0 +1,12 @@
+Python
+SQL
+R
+Excel
+Power BI
+Tableau
+pandas
+statistics
+AWS
+Git
+communication
+stakeholder management
