@@ -10,3 +10,5 @@ dist/
 my_skills.txt
 cv.txt
 *.cv.txt
+reports/
+!samples/

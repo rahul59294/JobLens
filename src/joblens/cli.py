@@ -9,6 +9,7 @@ from rich.table import Table
 
 from .ingest import ingest, load_postings
 from .match import load_my_skills, match_postings
+from .report import build_report
 from .skills import load_catalog, skill_counts
 from .stats import compare
 
@@ -107,6 +108,22 @@ def match_command(
             f"{row['coverage']:.1%}",
         )
     console.print(table)
+
+
+@app.command("report")
+def report_command(
+    folder: Path = typer.Argument(..., exists=True, file_okay=False, readable=True),
+    skills: Path | None = typer.Option(None, "--skills"),
+    cv: Path | None = typer.Option(None, "--cv"),
+    output: Path = typer.Option(Path("reports/report.md"), "--out"),
+) -> None:
+    """Generate a Markdown analysis report and adjacent chart."""
+
+    if skills is not None and cv is not None:
+        raise typer.BadParameter("provide at most one of --skills or --cv")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(build_report(folder, skills, cv, output), encoding="utf-8")
+    console.print(f"Report written to {output}")
 
 
 def _print_match_table(title: str, rows: pd.DataFrame, *, include_count: bool) -> None:
