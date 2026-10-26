@@ -1,0 +1,66 @@
+skill,category,aliases
+Python,languages,py
+R,languages,R language|R programming
+SQL,languages,Structured Query Language
+C++,languages,CPP|C plus plus
+Java,languages,
+JavaScript,languages,JS
+TypeScript,languages,TS
+C#,languages,C sharp|C-sharp
+Bash,languages,shell scripting
+Scala,languages,
+MATLAB,languages,Matlab
+SAS,languages,
+PostgreSQL,databases,Postgres
+MySQL,databases,
+SQL Server,databases,MSSQL|MS SQL Server
+Oracle,databases,Oracle Database
+SQLite,databases,
+Snowflake,databases,
+BigQuery,databases,Google BigQuery
+MongoDB,databases,Mongo
+Redis,databases,
+dbt,databases,data build tool
+Power BI,BI tools,PowerBI
+Tableau,BI tools,
+Looker,BI tools,Looker Studio
+Qlik Sense,BI tools,Qlik
+Excel,BI tools,Microsoft Excel
+Google Sheets,BI tools,
+Alteryx,BI tools,
+SSRS,BI tools,SQL Server Reporting Services
+pandas,stats/ML,
+NumPy,stats/ML,numpy
+scikit-learn,stats/ML,sklearn|scikit learn
+TensorFlow,stats/ML,tensor flow
+PyTorch,stats/ML,torch
+Apache Spark,stats/ML,Spark|PySpark
+statistics,stats/ML,statistical analysis
+probability,stats/ML,
+regression,stats/ML,linear regression|logistic regression
+forecasting,stats/ML,time series forecasting
+A/B testing,stats/ML,AB testing|split testing
+NLP,stats/ML,natural language processing
+computer vision,stats/ML,
+time series,stats/ML,time-series
+causal inference,stats/ML,
+AWS,cloud,Amazon Web Services
+Azure,cloud,Microsoft Azure
+GCP,cloud,Google Cloud|Google Cloud Platform
+Docker,cloud,
+Kubernetes,cloud,K8s
+Terraform,cloud,
+Airflow,cloud,Apache Airflow
+Git,cloud,version control
+Linux,cloud,
+Databricks,cloud,
+stakeholder management,business/soft skills,stakeholder engagement
+requirements gathering,business/soft skills,requirements analysis
+business process modeling,business/soft skills,BPM|process mapping
+Agile,business/soft skills,Agile methodology
+Scrum,business/soft skills,
+communication,business/soft skills,verbal communication|written communication
+presentation,business/soft skills,presenting
+critical thinking,business/soft skills,
+problem solving,business/soft skills,problem-solving
+project management,business/soft skills,

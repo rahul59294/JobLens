@@ -1,0 +1,9 @@
+.venv/
+.env
+__pycache__/
+.pytest_cache/
+*.py[cod]
+data/private/
+data/jobs.csv
+dist/
+*.egg-info/

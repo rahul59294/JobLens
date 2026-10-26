@@ -1,0 +1,11 @@
+---
+title: Data Analyst
+company: Pennine Media
+country: UK
+role_family: data analyst
+salary_min: 40000
+salary_max: 52000
+currency: GBP
+---
+
+Analyze audience data with SQL, R, and Excel. Build dashboards in Power BI, run A/B testing, and partner with marketing stakeholders. Knowledge of PostgreSQL and critical thinking are desirable.
